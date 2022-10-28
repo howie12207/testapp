@@ -33,7 +33,9 @@
             const openApp = () => {
                 window.location.href = link;
             };
-            openApp();
+            setTimeout(() => {
+                openApp();
+            }, 500);
 
             const goDownload = () => {
                 const storeUrl = {
