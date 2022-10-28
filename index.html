@@ -28,18 +28,26 @@
         <script>
             const md = new MobileDetect(window.navigator.userAgent);
 
-            console.log(md);
+            const link = "twsice://";
 
-            alert(`mobile ${md.mobile()}`);
-            alert(`tablet" ${md.tablet()}`);
-            alert(`iphone ${md.is("iPhone")}`);
-            // const link = "twsice://";
+            const openApp = () => {
+                window.location.href = link;
+            };
+            openApp();
 
-            // const openApp = () => {
-            //     window.href = link;
-            // };
-            // openApp();
-            // const goDownload = () => {};
+            const goDownload = () => {
+                const storeUrl = {
+                    apple: "https://apps.apple.com/tw/app/%E5%AF%8C%E8%98%AD%E5%85%8B%E6%9E%97-%E5%9C%8B%E6%B0%91e%E5%B8%B3%E6%88%B6/id1508279002",
+                    android:
+                        "https://play.google.com/store/apps/details?id=com.sice_app",
+                };
+                window.location.href = md.is("iPhone")
+                    ? storeUrl.apple
+                    : storeUrl.android;
+            };
+            setTimeout(() => {
+                goDownload();
+            }, 3000);
         </script>
     </body>
 </html>
