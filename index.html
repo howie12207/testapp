@@ -29,13 +29,25 @@
             const md = new MobileDetect(window.navigator.userAgent);
 
             const link = "twsice://fundDetail";
+            const link2 = "https://google.com.tw";
 
-            const openApp = () => {
-                window.location.href = link;
-            };
+            // const openApp = () => {
+            //     window.location.replace(link);
+            // };
+            // openApp();
 
-            const target = document.querySelector("#link");
-            target.click();
+            var iframe = document.createElement("iframe");
+
+            var body = document.body;
+
+            iframe.style.cssText = "display:none;width=0;height=0";
+            body.appendChild(iframe);
+            iframe.src = link;
+
+            var timer = null;
+
+            // const target = document.querySelector("#link");
+            // target.click();
 
             // const goDownload = () => {
             //     const storeUrl = {
