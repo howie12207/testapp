@@ -18,12 +18,28 @@
     </head>
     <body>
         <div>
-            <a href="twsice://fundDetail">測試1</a>
+            <!-- <a href="twsice://fundDetail">測試1</a>
             <a href="twsice://">測試2</a>
-            <a href="twsice://fundDetail?fundId=4008">測試3</a>
+            <a href="twsice://fundDetail?fundId=4008">測試3</a> -->
         </div>
 
         <!--没有应用下载应用-->
-        <script></script>
+        <script src="./mobile.js"></script>
+        <script>
+            const md = new MobileDetect(window.navigator.userAgent);
+
+            console.log(md);
+
+            alert("mobile", md.mobile());
+            alert("tablet", md.tablet());
+            alert("iphone", md.is("iPhone"));
+            // const link = "twsice://";
+
+            // const openApp = () => {
+            //     window.href = link;
+            // };
+            // openApp();
+            // const goDownload = () => {};
+        </script>
     </body>
 </html>
