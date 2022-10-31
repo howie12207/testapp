@@ -8,61 +8,106 @@
         />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-
-        <title>DeepLink 测试</title>
         <meta
             id="viewport"
             name="viewport"
             content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,minimal-ui"
         />
+        <title>領取您的開戶折扣碼 | 富蘭克林 國民的基金</title>
+        <meta
+            property="og:title"
+            content="領取您的開戶折扣碼 | 富蘭克林 國民的基金"
+        />
+        <meta
+            name="twitter:title"
+            content="領取您的開戶折扣碼 | 富蘭克林 國民的基金"
+        />
+        <meta
+            name="description"
+            content="下載app輸入好友推薦碼，新開戶馬上領取0手續費優惠！"
+        />
+        <meta
+            property="og:description"
+            content="下載app輸入好友推薦碼，新開戶馬上領取0手續費優惠！"
+        />
+        <meta
+            name="twitter:description"
+            content="下載app輸入好友推薦碼，新開戶馬上領取0手續費優惠！"
+        />
+
+        <link
+            rel="shortcut icon"
+            href="https://event.franklin.com.tw/commonResources/images/favicon.ico"
+        />
+
+        <meta
+            property="og:image"
+            content="https://event.franklin.com.tw/app-propaganda/images/fb.jpg"
+        />
+        <meta
+            name="twitter:image"
+            content="https://event.franklin.com.tw/app-propaganda/images/fb.jpg"
+        />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="1200" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@franklin_tw" />
+
+        <script type="application/ld+json">
+            {
+                "@context": "http://schema.org",
+                "@type": "Organization",
+                "name": "富蘭克林國民的基金",
+                "url": "https://www.franklin.com.tw/",
+                "logo": "https://event.franklin.com.tw/commonResources/images/header-logo.png",
+                "mainEntityOfPage": {
+                    "@type": "WebPage",
+                    "@id": "https://event.franklin.com.tw/mgm-redirect/"
+                },
+                "headline": "領取您的開戶折扣碼 | 富蘭克林 國民的基金",
+                "image": [
+                    "https://event.franklin.com.tw/app-propaganda/images/fb.jpg"
+                ]
+            }
+        </script>
     </head>
     <body>
-        <div>
-            <a id="link" tar>測試1</a>
-            <!-- <a href="twsice://">測試2</a>
-            <a href="twsice://fundDetail?fundId=4008">測試3</a> -->
-        </div>
-
-        <!--没有应用下载应用-->
         <script src="./mobile.js"></script>
         <script>
-            function onLoad() {
+            const goDownload = () => {
                 const md = new MobileDetect(window.navigator.userAgent);
-
-                const link = "twsice://fundDetail";
-                const link2 = "https://google.com.tw";
-
-                // const target = document.querySelector("#link");
-                // target.setAttribute("href", link);
-
-                // target.addEventListener("click", () => {
-                //     window.location = link;
-                // });
-
-                const openApp = () => {
-                    document.location = link;
+                const storeUrl = {
+                    apple: "https://apps.apple.com/tw/app/%E5%AF%8C%E8%98%AD%E5%85%8B%E6%9E%97-%E5%9C%8B%E6%B0%91e%E5%B8%B3%E6%88%B6/id1508279002",
+                    android:
+                        "https://play.google.com/store/apps/details?id=com.sice_app",
                 };
-                openApp();
+                window.location.href = md.is("iPhone")
+                    ? storeUrl.apple
+                    : storeUrl.android;
+            };
+            setTimeout(() => {
+                goDownload();
+            }, 3000);
 
-                // setTimeout(() => {
-                //     openApp();
-                // }, 5000);
-            }
-            window.onload = onLoad;
-
-            // const goDownload = () => {
-            //     const storeUrl = {
-            //         apple: "https://apps.apple.com/tw/app/%E5%AF%8C%E8%98%AD%E5%85%8B%E6%9E%97-%E5%9C%8B%E6%B0%91e%E5%B8%B3%E6%88%B6/id1508279002",
-            //         android:
-            //             "https://play.google.com/store/apps/details?id=com.sice_app",
+            // const initUrl = (id = "#link", target = "twsice://fundDetail") => {
+            //     const md = new MobileDetect(window.navigator.userAgent);
+            //     const el = document.querySelector(id);
+            //     el.setAttribute("href", target);
+            //     const goDownload = () => {
+            //         const storeUrl = {
+            //             apple: "https://apps.apple.com/tw/app/%E5%AF%8C%E8%98%AD%E5%85%8B%E6%9E%97-%E5%9C%8B%E6%B0%91e%E5%B8%B3%E6%88%B6/id1508279002",
+            //             android:
+            //                 "https://play.google.com/store/apps/details?id=com.sice_app",
+            //         };
+            //         window.location.href = md.is("iPhone")
+            //             ? storeUrl.apple
+            //             : storeUrl.android;
             //     };
-            //     window.location.href = md.is("iPhone")
-            //         ? storeUrl.apple
-            //         : storeUrl.android;
+            //     setTimeout(() => {
+            //         goDownload();
+            //     }, 3000);
             // };
-            // setTimeout(() => {
-            //     goDownload();
-            // }, 3000);
+            // initUrl();
         </script>
     </body>
 </html>
