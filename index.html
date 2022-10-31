@@ -18,7 +18,7 @@
     </head>
     <body>
         <div>
-            <a href="javascript:;" id="link">測試1</a>
+            <a href="twsice://fundDetail" id="link">測試1</a>
             <!-- <a href="twsice://">測試2</a>
             <a href="twsice://fundDetail?fundId=4008">測試3</a> -->
         </div>
@@ -31,10 +31,12 @@
             const link = "twsice://fundDetail";
             const link2 = "https://google.com.tw";
 
-            navigator.registerProtocolHandler("web+twsice", "twice?url=%s");
+            const setUrl = () => {
+                return `twsice://fundDetail`;
+            };
 
             const openApp = () => {
-                window.location = link;
+                window.location = setUrl();
             };
             openApp();
 
