@@ -18,7 +18,7 @@
     </head>
     <body>
         <div>
-            <a href="twsice://fundDetail" id="link">測試1</a>
+            <a id="link">測試1</a>
             <!-- <a href="twsice://">測試2</a>
             <a href="twsice://fundDetail?fundId=4008">測試3</a> -->
         </div>
@@ -26,28 +26,29 @@
         <!--没有应用下载应用-->
         <script src="./mobile.js"></script>
         <script>
-            const md = new MobileDetect(window.navigator.userAgent);
+            function onLoad() {
+                const md = new MobileDetect(window.navigator.userAgent);
 
-            const link = "twsice://fundDetail";
-            const link2 = "https://google.com.tw";
+                const link = "twsice://fundDetail";
+                const link2 = "https://google.com.tw";
 
-            const setUrl = () => {
-                return `twsice://fundDetail`;
-            };
+                const target = document.querySelector("#link");
+                target.setAttribute("href", link);
 
-            const openApp = () => {
-                window.location = setUrl();
-            };
-            openApp();
+                target.addEventListener("click", () => {
+                    window.location = link;
+                });
 
-            setTimeout(() => {
-                openApp();
-            }, 5000);
+                // const openApp = () => {
+                //     window.location = setUrl();
+                // };
+                // openApp();
 
-            // const target = document.querySelector("#link");
-            // target.addEventListener("click", () => {
-            //     window.location = link;
-            // });
+                // setTimeout(() => {
+                //     openApp();
+                // }, 5000);
+            }
+            window.onload = onLoad;
 
             // const goDownload = () => {
             //     const storeUrl = {
