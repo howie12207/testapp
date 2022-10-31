@@ -18,7 +18,7 @@
     </head>
     <body>
         <div>
-            <a id="link">測試1</a>
+            <a id="link" tar>測試1</a>
             <!-- <a href="twsice://">測試2</a>
             <a href="twsice://fundDetail?fundId=4008">測試3</a> -->
         </div>
@@ -32,17 +32,17 @@
                 const link = "twsice://fundDetail";
                 const link2 = "https://google.com.tw";
 
-                const target = document.querySelector("#link");
-                target.setAttribute("href", link);
+                // const target = document.querySelector("#link");
+                // target.setAttribute("href", link);
 
-                target.addEventListener("click", () => {
-                    window.location = link;
-                });
+                // target.addEventListener("click", () => {
+                //     window.location = link;
+                // });
 
-                // const openApp = () => {
-                //     window.location = setUrl();
-                // };
-                // openApp();
+                const openApp = () => {
+                    document.location = link;
+                };
+                openApp();
 
                 // setTimeout(() => {
                 //     openApp();
