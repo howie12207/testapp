@@ -786,7 +786,7 @@
                     urls.push(options.iosAppStore);
                 }
                 tryToOpenInMultiplePhases(urls);
-            } else if (hasAndroid && (md.phone() || md.tablet())) {
+            } else if (hasAndroid && md.mobile()) {
                 var intent = options.android;
                 var intentUrl =
                     "intent://" +
