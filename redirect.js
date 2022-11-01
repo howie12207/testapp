@@ -101,7 +101,8 @@
                     urls.push(options.iosAppStore);
                 }
                 tryToOpenInMultiplePhases(urls);
-            } else if (hasAndroid && /Android/.test(navigator.userAgent)) {
+            } else if (hasAndroid) {
+                alert(123);
                 var intent = options.android;
                 var intentUrl =
                     "intent://" +
