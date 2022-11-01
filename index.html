@@ -47,7 +47,7 @@
         <meta property="og:image:height" content="1200" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@franklin_tw" />
-        <script type="text/javascript" src="./redirect.js"></script>
+
         <script type="application/ld+json">
             {
                 "@context": "http://schema.org",
@@ -67,31 +67,45 @@
         </script>
     </head>
     <body>
-        <script src="./mobile.js"></script>
+        <a
+            href="intent://post/?message=undefined#Intent;scheme=twitter;package=com.twitter.android;end"
+            >twitter5</a
+        >
+        <a
+            href="intent://fundDetail#Intent;scheme=twsice;package=com.sice_app;end"
+            >ftsice5</a
+        >
+
+        <script type="text/javascript" src="./redirect.js"></script>
         <script>
             var qs = AppRedirect.queryString;
 
-            // Here we initiate the redirect process
             AppRedirect.redirect({
-                iosApp: "twitter://post?message=" + qs["message"],
+                iosApp: "twsice://fundDetail",
 
                 iosAppStore:
-                    "https://itunes.apple.com/il/app/twitter/id333903271?mt=8&message=" +
-                    qs["message"],
+                    "https://apps.apple.com/tw/app/%E5%AF%8C%E8%98%AD%E5%85%8B%E6%9E%97-%E5%9C%8B%E6%B0%91e%E5%B8%B3%E6%88%B6/id1508279002",
 
-                // For this, your app need to have category filter: android.intent.category.BROWSABLE
                 android: {
-                    host: "fundDetail", // Host/path/querystring part in a custom scheme URL
-                    // 'action': '', // Equivalent to ACTION in INTENTs
-                    // 'category': '', // Equivalent to CATEGORY in INTENTs
-                    // 'component': '', // Equivalent to COMPONENT in INTENTs
-                    scheme: "twsice", // Scheme part in a custom scheme URL
-                    package: "com.sice_app", // Package name in Play store
+                    host: "fundDetail",
+                    scheme: "twsice",
+                    package: "com.sice_app",
                     fallback:
-                        "https://play.google.com/store/apps/details?id=com.sice_app&message=" +
-                        qs["message"],
+                        "https://play.google.com/store/apps/details?id=com.sice_app",
                 },
             });
+
+            // android: {
+            //     host: "post/?message=" + encodeURIComponent(qs["message"]), // Host/path/querystring part in a custom scheme URL
+            //     // 'action': '', // Equivalent to ACTION in INTENTs
+            //     // 'category': '', // Equivalent to CATEGORY in INTENTs
+            //     // 'component': '', // Equivalent to COMPONENT in INTENTs
+            //     scheme: "twitter", // Scheme part in a custom scheme URL
+            //     package: "com.twitter.android", // Package name in Play store
+            //     fallback:
+            //         "https://play.google.com/store/apps/details?id=com.twitter.android&hl=en&message=" +
+            //         qs["message"],
+            // },
 
             // const goDownload = () => {
             //     const md = new MobileDetect(window.navigator.userAgent);
