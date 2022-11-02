@@ -749,7 +749,7 @@
 
                 var currentIndex = 0;
                 var redirectTime = new Date();
-                window.location = urls[currentIndex++];
+                window.location.href = urls[currentIndex++];
 
                 var next = function () {
                     if (urls.length > currentIndex) {
@@ -767,7 +767,7 @@
                                 );
                             } else {
                                 redirectTime = new Date();
-                                window.location = urls[currentIndex++];
+                                window.location.href = urls[currentIndex++];
                                 next();
                             }
                         }, 10);
@@ -823,7 +823,7 @@
                 if (anchor.click) {
                     anchor.click();
                 } else {
-                    window.location = intentUrl;
+                    window.location.href = intentUrl;
                 }
             } else {
                 console.log("Unknown platform, nothing to do");

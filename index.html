@@ -67,80 +67,38 @@
         </script>
     </head>
     <body>
-        <a
-            href="intent://post/?message=undefined#Intent;scheme=twitter;package=com.twitter.android;end"
-            >twitter5</a
-        >
-        <a
-            href="intent://fundDetail#Intent;scheme=twsice;package=com.sice_app;end"
-            >ftsice5</a
-        >
+        <div class="text" id="text">
+            <a
+                href="https://apps.apple.com/tw/app/%E5%AF%8C%E8%98%AD%E5%85%8B%E6%9E%97-%E5%9C%8B%E6%B0%91e%E5%B8%B3%E6%88%B6/id1508279002"
+                >蘋果用戶，前往下載</a
+            >
+            <a href="https://play.google.com/store/apps/details?id=com.sice_app"
+                >安卓用戶，前往下載</a
+            >
+        </div>
 
         <script type="text/javascript" src="./redirect.js?ver=1409"></script>
         <script>
-            var qs = AppRedirect.queryString;
+            const { to = "login", fundId = "" } = AppRedirect.queryString || {};
+            const path = to === "fundDetail" ? `${to}?fundId=${fundId}` : to;
+
+            const iosStore =
+                "https://apps.apple.com/tw/app/%E5%AF%8C%E8%98%AD%E5%85%8B%E6%9E%97-%E5%9C%8B%E6%B0%91e%E5%B8%B3%E6%88%B6/id1508279002";
+            const androidStore =
+                "https://play.google.com/store/apps/details?id=com.sice_app";
 
             AppRedirect.redirect({
-                iosApp: "twsice://fundDetail",
+                iosApp: `twsice://${path}`,
 
-                iosAppStore:
-                    "https://apps.apple.com/tw/app/%E5%AF%8C%E8%98%AD%E5%85%8B%E6%9E%97-%E5%9C%8B%E6%B0%91e%E5%B8%B3%E6%88%B6/id1508279002",
+                iosAppStore: iosStore,
 
                 android: {
-                    host: "fundDetail",
+                    host: path,
                     scheme: "twsice",
                     package: "com.sice_app",
-                    fallback:
-                        "https://play.google.com/store/apps/details?id=com.sice_app",
+                    fallback: androidStore,
                 },
             });
-
-            // android: {
-            //     host: "post/?message=" + encodeURIComponent(qs["message"]), // Host/path/querystring part in a custom scheme URL
-            //     // 'action': '', // Equivalent to ACTION in INTENTs
-            //     // 'category': '', // Equivalent to CATEGORY in INTENTs
-            //     // 'component': '', // Equivalent to COMPONENT in INTENTs
-            //     scheme: "twitter", // Scheme part in a custom scheme URL
-            //     package: "com.twitter.android", // Package name in Play store
-            //     fallback:
-            //         "https://play.google.com/store/apps/details?id=com.twitter.android&hl=en&message=" +
-            //         qs["message"],
-            // },
-
-            // const goDownload = () => {
-            //     const md = new MobileDetect(window.navigator.userAgent);
-            //     const storeUrl = {
-            //         apple: "https://apps.apple.com/tw/app/%E5%AF%8C%E8%98%AD%E5%85%8B%E6%9E%97-%E5%9C%8B%E6%B0%91e%E5%B8%B3%E6%88%B6/id1508279002",
-            //         android:
-            //             "https://play.google.com/store/apps/details?id=com.sice_app",
-            //     };
-            //     window.location.href = md.is("iPhone")
-            //         ? storeUrl.apple
-            //         : storeUrl.android;
-            // };
-            // setTimeout(() => {
-            //     goDownload();
-            // }, 3000);
-
-            // const initUrl = (id = "#link", target = "twsice://fundDetail") => {
-            //     const md = new MobileDetect(window.navigator.userAgent);
-            //     const el = document.querySelector(id);
-            //     el.setAttribute("href", target);
-            //     const goDownload = () => {
-            //         const storeUrl = {
-            //             apple: "https://apps.apple.com/tw/app/%E5%AF%8C%E8%98%AD%E5%85%8B%E6%9E%97-%E5%9C%8B%E6%B0%91e%E5%B8%B3%E6%88%B6/id1508279002",
-            //             android:
-            //                 "https://play.google.com/store/apps/details?id=com.sice_app",
-            //         };
-            //         window.location.href = md.is("iPhone")
-            //             ? storeUrl.apple
-            //             : storeUrl.android;
-            //     };
-            //     setTimeout(() => {
-            //         goDownload();
-            //     }, 3000);
-            // };
-            // initUrl();
         </script>
     </body>
 </html>
