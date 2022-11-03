@@ -685,155 +685,74 @@
     })(),
 );
 
-// Written by Daniel Cohen Gindi
-// danielgindi@gmail.com
-// http://github.com/danielgindi/app-redirect
-(function () {
-    const md = new MobileDetect(window.navigator.userAgent);
-    var queryString = {},
-        browserMovedToBackground = false;
+const md = new MobileDetect(window.navigator.userAgent);
 
-    // Parse the query string so we can take individual query string params
-    (function (search) {
-        search = (search || "").split(/[\&\?]/g);
-        for (var i = 0, count = search.length; i < count; i++) {
-            if (!search[i]) continue;
-            var pair = search[i].split("=");
-            queryString[pair[0]] =
-                queryString[pair[0]] !== undefined
-                    ? [pair[1] || ""].concat(queryString[pair[0]])
-                    : pair[1] || "";
-        }
-    })(window.location.search);
-
-    // Listen to visibility change to prevent next url
-    window.document.addEventListener("visibilitychange", function (e) {
-        browserMovedToBackground =
-            window.document.visibilityState === "hidden" ||
-            window.document.visibilityState === "unloaded";
-    });
-    window.addEventListener("blur", function (e) {
-        browserMovedToBackground = true;
-    });
-
-    var AppRedirect = {
-        /**
-         * @expose
-         * @public
-         * */
-        queryString: queryString,
-
-        redirect: function (options) {
-            var hasIos = !!(options.iosApp || options.iosAppStore);
-            var hasAndroid = !!options.android;
-
-            /**
-             * What happens now is:
-             * 1. We select the correct platform based on userAgent
-             * 2. We try to open the app using the special schema
-             *
-             *    └───> If it succeded, the we have left the browser, and went to the app.
-             *          *. If the user goes back to the browser at this stage, he will be sadly redirected to the second url (AppStore etc.)
-             *    └───> If opening the app failed (schema not recognized), then:
-             *          1. An error will be shown
-             *          2. The user will be redirected to the second url.
-             *          *.  Returning to the browser later will show the error.
-             *
-             * For Android it's different. There's the intent:// url, which takes the "package" argument in order to fallback to the Store.
-             * But if you want to aggregate arguments to the store, you can use the "fallback" argument for that, and supply a Store url.
-             * QueryString arguments will be automatically aggregated.
-             */
-
-            var tryToOpenInMultiplePhases = function (urls) {
-                browserMovedToBackground = false;
-
-                var currentIndex = 0;
-                var redirectTime = new Date();
-                window.location.href = urls[currentIndex++];
-
-                var next = function () {
-                    if (urls.length > currentIndex) {
-                        setTimeout(function () {
-                            if (browserMovedToBackground) {
-                                console.log(
-                                    "Browser moved to the background, we assume that we are done here",
-                                );
-                                return;
-                            }
-
-                            if (new Date() - redirectTime > 3000) {
-                                console.log(
-                                    "Enough time has passed, the app is probably open",
-                                );
-                            } else {
-                                redirectTime = new Date();
-                                window.location.href = urls[currentIndex++];
-                                next();
-                            }
-                        }, 10);
-                    }
-                };
-
-                next();
-            };
-
-            if (hasIos && md.is("iPhone")) {
-                var urls = [];
-                if (options.iosApp) {
-                    urls.push(options.iosApp);
-                }
-                if (options.iosAppStore) {
-                    urls.push(options.iosAppStore);
-                }
-                tryToOpenInMultiplePhases(urls);
-            } else if (hasAndroid && md.mobile()) {
-                var intent = options.android;
-                var intentUrl =
-                    "intent://" +
-                    intent.host +
-                    "#Intent;" +
-                    "scheme=" +
-                    encodeURIComponent(intent.scheme) +
-                    ";" +
-                    "package=" +
-                    encodeURIComponent(intent.package) +
-                    ";" +
-                    (intent.action
-                        ? "action=" + encodeURIComponent(intent.action) + ";"
-                        : "") +
-                    (intent.category
-                        ? "category=" +
-                          encodeURIComponent(intent.category) +
-                          ";"
-                        : "") +
-                    (intent.component
-                        ? "component=" +
-                          encodeURIComponent(intent.component) +
-                          ";"
-                        : "") +
-                    (intent.fallback
-                        ? "S.browser_fallback_url=" +
-                          encodeURIComponent(intent.fallback) +
-                          ";"
-                        : "") +
-                    "end";
-                var anchor = document.createElement("a");
-                document.body.appendChild(anchor);
-                anchor.href = intentUrl;
-                if (anchor.click) {
-                    anchor.click();
-                } else {
-                    window.location.href = intentUrl;
-                }
-            } else {
-                setTimeout(() => {
-                    window.location.href =
-                        "https://wt.franklin.com.tw:8081/openAccount/";
-                }, 4000);
-            }
-        },
+// Dom Handle
+const elText = document.querySelector("#text");
+const elTarget = document.querySelector("#target");
+const elCounter = document.querySelector("#counter");
+const domHandle = () => {
+    let counterNumber = 4;
+    const show = () => {
+        elText.classList.remove("hidden");
     };
+    const setTarget = () => {
+        elTarget.innerHTML = md.mobile() ? "app store" : "開戶頁面";
+    };
+    setTimeout(() => {
+        setTarget();
+        show();
+    }, 1000);
 
-    /** @expose */
-    window.AppRedirect = AppRedirect;
-})();
+    const counting = setInterval(() => {
+        if (counterNumber <= 0) return clearInterval(counting);
+        elCounter.innerHTML = --counterNumber;
+    }, 1000);
+};
+domHandle();
+
+const queryToObject = () => {
+    let search = (window.location.search || "").split(/[\&\?]/g);
+    const result = {};
+    for (var i = 0, count = search.length; i < count; i++) {
+        if (!search[i]) continue;
+        var pair = search[i].split("=");
+        result[pair[0]] =
+            result[pair[0]] !== undefined
+                ? [pair[1] || ""].concat(result[pair[0]])
+                : pair[1] || "";
+    }
+    return result || {};
+};
+
+// Reference http://github.com/danielgindi/app-redirect
+// Redirect Handle
+const redirectHandle = () => {
+    const delay = 4000;
+    const iosStore =
+        "https://apps.apple.com/tw/app/%E5%AF%8C%E8%98%AD%E5%85%8B%E6%9E%97-%E5%9C%8B%E6%B0%91e%E5%B8%B3%E6%88%B6/id1508279002";
+    const androidStore =
+        "https://play.google.com/store/apps/details?id=com.sice_app";
+    const { to = "login" } = queryToObject();
+    const path = `${to}${window.location.search}`;
+    const iosApp = `twsice://${path}`;
+    const androidApp = `intent://${path}#Intent;scheme=twsice;package=com.sice_app;end`;
+    const openAccount = `https://wt.franklin.com.tw:8081/openAccount/`;
+
+    if (md.is("iPhone")) {
+        window.location.href = iosApp;
+        setTimeout(() => {
+            window.location.href = iosStore;
+        }, delay);
+    } else if (md.mobile()) {
+        window.location.href = androidApp;
+        setTimeout(() => {
+            window.location.href = androidStore;
+        }, delay);
+    } else {
+        setTimeout(() => {
+            window.location.href = openAccount;
+        }, delay);
+    }
+};
+redirectHandle();

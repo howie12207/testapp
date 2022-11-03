@@ -65,40 +65,67 @@
                 ]
             }
         </script>
+
+        <style>
+            .hidden {
+                display: none;
+                visibility: hidden;
+                opacity: 0;
+            }
+        </style>
     </head>
     <body>
-        <div class="text" id="text">
-            <a
-                href="https://apps.apple.com/tw/app/%E5%AF%8C%E8%98%AD%E5%85%8B%E6%9E%97-%E5%9C%8B%E6%B0%91e%E5%B8%B3%E6%88%B6/id1508279002"
-                >蘋果用戶，前往下載</a
-            >
-            <a href="https://play.google.com/store/apps/details?id=com.sice_app"
-                >安卓用戶，前往下載</a
-            >
+        <div class="hidden text" id="text">
+            正在前往<span id="target"></span>...<span id="counter">3</span>秒
         </div>
 
-        <script type="text/javascript" src="./redirect.js?ver=1409"></script>
+        <script type="text/javascript" src="./base.js?ver=1409"></script>
         <script>
-            const { to = "login", fundId = "" } = AppRedirect.queryString || {};
-            const path = to === "fundDetail" ? `${to}?fundId=${fundId}` : to;
+            // const init = () => {
+            //     console.log(2);
+            //     const { to = "login" } = AppRedirect.queryString || {};
+            //     let path = `${to}${window.location.search}`;
 
-            const iosStore =
-                "https://apps.apple.com/tw/app/%E5%AF%8C%E8%98%AD%E5%85%8B%E6%9E%97-%E5%9C%8B%E6%B0%91e%E5%B8%B3%E6%88%B6/id1508279002";
-            const androidStore =
-                "https://play.google.com/store/apps/details?id=com.sice_app";
+            //     const iosStore =
+            //         "https://apps.apple.com/tw/app/%E5%AF%8C%E8%98%AD%E5%85%8B%E6%9E%97-%E5%9C%8B%E6%B0%91e%E5%B8%B3%E6%88%B6/id1508279002";
+            //     const androidStore =
+            //         "https://play.google.com/store/apps/details?id=com.sice_app";
 
-            AppRedirect.redirect({
-                iosApp: `twsice://${path}`,
+            //     AppRedirect.redirect({
+            //         iosApp: `twsice://${path}`,
+            //         iosAppStore: iosStore,
+            //         android: {
+            //             host: path,
+            //             scheme: "twsice",
+            //             package: "com.sice_app",
+            //             fallback: androidStore,
+            //         },
+            //     });
 
-                iosAppStore: iosStore,
+            //     const md = new MobileDetect(window.navigator.userAgent);
 
-                android: {
-                    host: path,
-                    scheme: "twsice",
-                    package: "com.sice_app",
-                    fallback: androidStore,
-                },
-            });
+            //     const elText = document.querySelector("#text");
+            //     const elTarget = document.querySelector("#target");
+            //     const elCounter = document.querySelector("#counter");
+            //     let counterNumber = 4;
+
+            //     const show = () => {
+            //         elText.classList.remove("hidden");
+            //     };
+            //     const setTarget = () => {
+            //         elTarget.innerHTML = md.mobile() ? "app store" : "開戶頁面";
+            //     };
+            //     setTimeout(() => {
+            //         setTarget();
+            //         show();
+            //     }, 1000);
+
+            //     const counting = setInterval(() => {
+            //         if (counterNumber <= 0) return clearInterval(counting);
+            //         elCounter.innerHTML = --counterNumber;
+            //     }, 1000);
+            // };
+            // window.onload = init;
         </script>
     </body>
 </html>
