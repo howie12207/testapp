@@ -757,16 +757,13 @@ const redirectHandle = () => {
             if (browserMovedToBackground) return;
             setTimeout(() => {
                 window.location.href = iosStore;
-            }, delay);
-        }, 10);
+            }, delay - 1000);
+        }, 1000);
     } else if (md.mobile()) {
         window.location.href = androidApp;
         setTimeout(() => {
-            if (browserMovedToBackground) return;
-            setTimeout(() => {
-                window.location.href = androidStore;
-            }, delay);
-        }, 10);
+            window.location.href = androidStore;
+        }, delay);
     } else {
         setTimeout(() => {
             window.location.href = openAccount;
