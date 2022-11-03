@@ -728,6 +728,18 @@ const queryToObject = () => {
 // Reference http://github.com/danielgindi/app-redirect
 // Redirect Handle
 const redirectHandle = () => {
+    let browserMovedToBackground = false;
+
+    // listen for app open
+    window.document.addEventListener("visibilitychange", function (e) {
+        browserMovedToBackground =
+            window.document.visibilityState === "hidden" ||
+            window.document.visibilityState === "unloaded";
+    });
+    window.addEventListener("blur", function (e) {
+        browserMovedToBackground = true;
+    });
+
     const delay = 4000;
     const iosStore =
         "https://apps.apple.com/tw/app/%E5%AF%8C%E8%98%AD%E5%85%8B%E6%9E%97-%E5%9C%8B%E6%B0%91e%E5%B8%B3%E6%88%B6/id1508279002";
@@ -742,13 +754,19 @@ const redirectHandle = () => {
     if (md.is("iPhone")) {
         window.location.href = iosApp;
         setTimeout(() => {
-            window.location.href = iosStore;
-        }, delay);
+            if (browserMovedToBackground) return;
+            setTimeout(() => {
+                window.location.href = iosStore;
+            }, delay);
+        }, 10);
     } else if (md.mobile()) {
         window.location.href = androidApp;
         setTimeout(() => {
-            window.location.href = androidStore;
-        }, delay);
+            if (browserMovedToBackground) return;
+            setTimeout(() => {
+                window.location.href = androidStore;
+            }, delay);
+        }, 10);
     } else {
         setTimeout(() => {
             window.location.href = openAccount;
