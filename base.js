@@ -749,9 +749,11 @@ const redirectHandle = () => {
     const path = `${to}${window.location.search}`;
     const iosApp = `twsice://${path}`;
     const androidApp = `intent://${path}#Intent;scheme=twsice;package=com.sice_app;end`;
-    const openAccount = relType
-        ? `https://wt.franklin.com.tw:8081/openAccount/?relType=${relType}`
-        : `https://wt.franklin.com.tw:8081/openAccount/`;
+    const isProd = window.location.hostname === "etrade.franklin.com.tw";
+    let openAccount = isProd
+        ? "https://etrade.franklin.com.tw/openAccount/"
+        : "https://wt.franklin.com.tw:8081/openAccount/";
+    openAccount = relType ? `${openAccount}?relType=${relType}` : openAccount;
 
     if (md.is("iPhone")) {
         window.location.href = iosApp;
