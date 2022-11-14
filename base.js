@@ -745,11 +745,13 @@ const redirectHandle = () => {
         "https://apps.apple.com/tw/app/%E5%AF%8C%E8%98%AD%E5%85%8B%E6%9E%97-%E5%9C%8B%E6%B0%91e%E5%B8%B3%E6%88%B6/id1508279002";
     const androidStore =
         "https://play.google.com/store/apps/details?id=com.sice_app";
-    const { to = "login" } = queryToObject();
+    const { to = "login", relType = "" } = queryToObject();
     const path = `${to}${window.location.search}`;
     const iosApp = `twsice://${path}`;
     const androidApp = `intent://${path}#Intent;scheme=twsice;package=com.sice_app;end`;
-    const openAccount = `https://wt.franklin.com.tw:8081/openAccount/`;
+    const openAccount = relType
+        ? `https://wt.franklin.com.tw:8081/openAccount/?relType=${relType}`
+        : `https://wt.franklin.com.tw:8081/openAccount/`;
 
     if (md.is("iPhone")) {
         window.location.href = iosApp;
