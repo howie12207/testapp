@@ -67,21 +67,29 @@
         </script>
 
         <!-- GTM -->
-        <script
-            async
-            src="https://www.googletagmanager.com/gtag/js?id=G-MK6LKZ5CD9"
-        ></script>
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag() {
-                dataLayer.push(arguments);
-            }
-            gtag("js", new Date());
-
-            gtag("config", "G-MK6LKZ5CD9");
+            (function (w, d, s, l, i) {
+                w[l] = w[l] || [];
+                w[l].push({
+                    "gtm.start": new Date().getTime(),
+                    event: "gtm.js",
+                });
+                var f = d.getElementsByTagName(s)[0],
+                    j = d.createElement(s),
+                    dl = l != "dataLayer" ? "&l=" + l : "";
+                j.async = true;
+                j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+                f.parentNode.insertBefore(j, f);
+            })(window, document, "script", "dataLayer", "GTM-N4BLLWD");
         </script>
 
         <style>
+            .async-hide {
+                opacity: 0 !important;
+            }
+
             .hidden {
                 display: none;
                 visibility: hidden;
@@ -90,6 +98,15 @@
         </style>
     </head>
     <body>
+        <noscript
+            ><iframe
+                src="https://www.googletagmanager.com/ns.html?id=GTM-N4BLLWD"
+                height="0"
+                width="0"
+                style="display: none; visibility: hidden"
+            ></iframe
+        ></noscript>
+
         <div class="hidden text" id="text">
             正在前往<span id="target"></span>...<span id="counter">3</span>秒
         </div>
